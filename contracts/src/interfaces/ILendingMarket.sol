@@ -18,13 +18,12 @@ interface ILendingMarket {
      * E.g. User has 100 interest-bearing USDC, calls withdraw() and receives 100 * price USDC, burning the 100 interest-bearing USDC
      * @param asset The address of the underlying asset to withdraw
      * @param amount The underlying amount to be withdrawn
-     *   - Send the value type(uint256).max in order to withdraw the whole interest-bearing token balance
-     * @param to The address that will receive the underlying, same as msg.sender if the user
+     * @param receiver The address that will receive the underlying, same as msg.sender if the user
      *   wants to receive it on his own wallet, or a different address if the beneficiary is a
      *   different wallet
      * @return The final amount withdrawn
      */
-    function withdraw(address asset, uint256 amount, address to) external returns (uint256);
+    function withdraw(address asset, uint256 amount, address receiver) external returns (uint256);
 
     /**
      * @notice Allows users to borrow a specific `amount` of the reserve underlying asset, provided that the borrower
@@ -44,7 +43,6 @@ interface ILendingMarket {
      * @notice Repays a borrowed `amount` on a specific reserve, burning the equivalent debt tokens owned
      * @param asset The address of the borrowed underlying asset previously borrowed
      * @param amount The amount to repay
-     * - Send the value type(uint256).max in order to repay the whole debt for `asset` on the specific `debtMode`
      * @param onBehalfOf The address of the user who will get his debt reduced/removed. Should be the address of the
      * user calling the function if he wants to reduce/remove his own debt, or the address of any other
      * other borrower whose debt should be removed
@@ -52,7 +50,17 @@ interface ILendingMarket {
      */
     function repay(address asset, uint256 amount, address onBehalfOf) external returns (uint256);
 
+    /*
+     * Allow third party accounts to borrow tokens on behalf of the owner.
+     * @param delegatee The address of the third party account to allow
+     * @param allowed True if the delegatee is allowed to borrow tokens on behalf of the owner, false otherwise
+     */
     function allow(address delegatee, bool allowed) external;
 
+    /*
+     * Returns true if the delegatee is allowed to borrow tokens on behalf of the owner.
+     * @param owner The address of the owner
+     * @param account The address of the delegatee
+     */
     function isAllowed(address owner, address account) external view returns (bool);
 }
