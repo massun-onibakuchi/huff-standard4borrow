@@ -50,8 +50,7 @@ contract AaveV3Market is LendingMarketBase {
         IERC20(aToken).safeTransferFrom(msg.sender, address(this), amount);
         IERC20(aToken).safeApprove(pool, amount);
 
-        IPool(pool).withdraw(asset, amount, receiver);
-        return amount;
+        return IPool(pool).withdraw(asset, amount, receiver);
     }
 
     /// @notice owner must have delegated credit to this contract via debtToken.approveDelegation() before calling this function
@@ -73,7 +72,6 @@ contract AaveV3Market is LendingMarketBase {
         IERC20(asset).safeTransferFrom(msg.sender, address(this), amount);
         IERC20(asset).safeApprove(pool, amount);
 
-        IPool(pool).repay(asset, amount, 2, onBehalfOf);
-        return amount;
+        return IPool(pool).repay(asset, amount, 2, onBehalfOf);
     }
 }

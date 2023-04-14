@@ -20,16 +20,24 @@ abstract contract BaseTestAaveV3Market is BaseTestLendingMarket {
     function setUp() public virtual override {
         require(asset != address(0), "asset is not set");
 
-        (address _aToken, , address _debtToken) = IAaveProtocolDataProvider(PROVIDER.getPoolDataProvider())
-            .getReserveTokensAddresses(asset);
+        address dataProvider = PROVIDER.getPoolDataProvider();
+        (address _aToken, , address _debtToken) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(
+            asset
+        );
         interestBearingToken = _aToken;
         debtToken = _debtToken;
         market = _deploy();
 
         _afterSetUp();
+
         vm.label(address(PROVIDER), "provider");
         vm.label(PROVIDER.getPool(), "pool");
         vm.label(debtToken, "debtToken");
+        vm.label(dataProvider, "poolDataProvider");
+
+        console2.log("provider", address(PROVIDER));
+        console2.log("poolDataProvider", dataProvider);
+        console2.log("ibToken", interestBearingToken);
     }
 
     function _deploy() internal virtual returns (address _market) {

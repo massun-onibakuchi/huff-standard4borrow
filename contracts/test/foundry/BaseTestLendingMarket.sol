@@ -33,7 +33,7 @@ abstract contract BaseTestLendingMarket is Test {
         IERC20(interestBearingToken).approve(market, type(uint256).max);
     }
 
-    function testSupply_Ok() public {
+    function testSupply_Ok() public virtual {
         //setUp
         uint256 amount = 100;
         uint256 expectedBal = _convertToUnderlying(amount);
@@ -47,7 +47,7 @@ abstract contract BaseTestLendingMarket is Test {
         assertEq(IERC20(asset).balanceOf(market), 0, "market balance");
     }
 
-    function testWithdraw_Ok() public {
+    function testWithdraw_Ok() public virtual {
         //setUp
         uint256 amount = 100;
         uint256 expectedBal = _convertToUnderlying(amount);
@@ -64,7 +64,7 @@ abstract contract BaseTestLendingMarket is Test {
         assertEq(IERC20(asset).balanceOf(market), 0, "market balance");
     }
 
-    function testBorrow_WhenSenderIsOwner() public {
+    function testBorrow_WhenSenderIsOwner() public virtual {
         //setUp
         uint256 amount = 10 ** decimals;
         ILendingMarket(market).supply(asset, 1000 * amount, address(this));
@@ -80,7 +80,7 @@ abstract contract BaseTestLendingMarket is Test {
         assertEq(IERC20(asset).balanceOf(market), 0, "market balance");
     }
 
-    function testBorrow_WhenSenderIsNotOwner() public {
+    function testBorrow_WhenSenderIsNotOwner() public virtual {
         //setUp
         uint256 amount = 10 ** decimals;
         ILendingMarket(market).supply(asset, 1000 * amount, address(this));
@@ -99,7 +99,7 @@ abstract contract BaseTestLendingMarket is Test {
         assertEq(IERC20(asset).balanceOf(market), 0, "market balance");
     }
 
-    function testBorrow_RevertIfSenderIsNotAllowedByOwner() public {
+    function testBorrow_RevertIfSenderIsNotAllowedByOwner() public virtual {
         //setUp
         uint256 amount = 10 ** decimals;
         ILendingMarket(market).supply(asset, 1000 * amount, address(this));
@@ -118,7 +118,7 @@ abstract contract BaseTestLendingMarket is Test {
         vm.expectRevert("LendingMarketBase: not allowed");
     }
 
-    function testRepay_Ok() public {
+    function testRepay_Ok() public virtual {
         //setUp
         uint256 amount = 10 ** decimals;
         ILendingMarket(market).supply(asset, 1000 * amount, address(this));
@@ -140,7 +140,7 @@ abstract contract BaseTestLendingMarket is Test {
     // allow method
     // ************************************************************ //
 
-    function testAllow_Ok(address delegatee) public {
+    function testAllow_Ok(address delegatee) public virtual {
         //execution
         ILendingMarket(market).allow(delegatee, true);
         //assert
