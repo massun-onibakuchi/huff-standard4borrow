@@ -1,0 +1,166 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "huffmate/auth/NonPayable.huff"
+#include "huffmate/utils/SafeTransferLib.huff"
+#include "../LendingMarketBase.huff"
+
+// Interface
+#define function supply(address, uint256, address) nonpayable returns (uint256)
+#define function withdraw(address, uint256, address) nonpayable returns (uint256)
+
+// Events
+// #define event Allow(address indexed owner, uint8 indexed account, bool allowed)
+
+// Constants
+/// @notice Aave V3 Pool address ethereum mainnet
+#define constant PROTOCOL_DATA_PROVIDER = 0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E
+#define constant POOL = 0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2
+#define constant GET_RESERVE_TOKENS_FUNC_SELECTOR = 0xd2493b6c00000000000000000000000000000000000000000000000000000000
+#define constant DEPOSIT_FUNC_SELECTOR = 0xe8eda9df00000000000000000000000000000000000000000000000000000000
+#define constant WITHDRAW_FUNC_SELECTOR = 0x69328dec00000000000000000000000000000000000000000000000000000000
+
+// function supply(address asset, uint256 amount, address receiver) external returns (uint256)
+#define macro SUPPLY() = takes (0) returns (0) {
+    [POOL]
+    0x44 calldataload    // [receiver, pool]
+    0x24 calldataload    // [amount, receiver, pool]
+    0x04 calldataload    // [asset, amount, receiver, pool]
+
+    dup1 // [asset, asset, amount, receiver, pool]
+    dup3 // [amount, asset, asset, amount, receiver, pool]
+    address // [this, amount, asset, asset, amount, receiver, pool]
+    caller // [caller, this, amount, asset, asset, amount, receiver, pool]
+
+    // IERC20(asset).safeTransferFrom(msg.sender, address(this), amount)
+    // stack input: [from, to, amount, asset]
+    SAFE_TRANSFER_FROM(0x00) // [asset, amount, receiver, pool]
+
+    dup1 // [asset, asset, amount, receiver, pool]
+    dup3 // [amount asset, asset, amount, receiver, pool]
+    dup6 // [pool, amount ,asset, asset, amount, receiver, pool]
+
+    // IERC20(asset).safeApprove(pool, amount)
+    // stack input: [to, amount, asset]
+    SAFE_APPROVE(0x00)  // [asset, amount, receiver, pool]
+
+    // IPool(pool).deposit(asset, amount, receiver, REFERRAL_CODE);
+    
+    [DEPOSIT_FUNC_SELECTOR]
+    0x00
+    mstore
+
+    0x04 // [0x04, asset, amount, receiver, pool]
+    mstore
+
+    0x24 // [0x24, amount, receiver, pool]
+    mstore
+
+    0x44 // [0x44, receiver, pool]
+    mstore
+
+    0x00
+    0x64 mstore
+
+    0x00 // [retSize, pool]
+    dup1 // [retOffset, retSize, pool]
+    0x84 // [inSize, retOffset, retSize, pool]
+    dup2 // [inOffset, inSize, retOffset, retSize, pool]
+    dup1 // [value, inOffset, inSize, retOffset, retSize, pool]
+    dup6 // [pool, value, inOffset, inSize, retOffset, retSize, pool]
+    gas call // [success, pool]
+
+    iszero error jumpi // [pool]
+
+    0x44 0x24 return
+}
+
+// function withdraw(address asset, uint256 amount, address receiver) external returns (uint256)
+#define macro WITHDRAW() = takes (0) returns (0) {
+    // [POOL]
+    // 0x44 calldataload    // [receiver, pool]
+    // 0x24 calldataload    // [amount, receiver, pool]
+    // 0x04 calldataload    // [asset, amount, receiver, pool]
+
+    // [GET_RESERVE_TOKENS_FUNC_SELECTOR]
+    // 0x00
+    // mstore
+
+    // dup1
+    // 0x04 mstore
+
+    // // (address aToken, , ) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(asset);
+    // 0x20
+    // 0x00
+    // 0x24
+    // 0x00
+    // [PROTOCOL_DATA_PROVIDER]
+    // gas staticcall
+
+    // iszero error jumpi
+
+    // 0x00
+    // mload // [aToken, asset, amount, receiver, pool]
+    // dup3 // [amount, aToken, asset, amount, receiver, pool]
+    // address // [this, amount, aToken, asset, amount, receiver, pool]
+    // caller // [caller, this, amount, aToken, asset, amount, receiver, pool]
+
+    // // IERC20(aToken).safeTransferFrom(msg.sender, address(this), amount)
+    // // stack input: [from, to, amount, aToken]
+    // SAFE_TRANSFER_FROM(0x00) // [asset, amount, receiver, pool]
+
+    // dup1 // [aToken, asset, amount, receiver, pool]
+    // dup3 // [amount aToken, asset, amount, receiver, pool]
+    // dup6 // [pool, amount ,aToken, asset, amount, receiver, pool]
+
+    // // IERC20(aToken).safeApprove(pool, amount)
+    // // stack input: [to, amount, asset]
+    // SAFE_APPROVE(0x00)  // [asset, amount, receiver, pool]
+
+    // // IPool(pool).withdraw(asset, amount, receiver);
+    
+    // [WITHDRAW_FUNC_SELECTOR]
+    // 0x00
+    // mstore
+
+    // 0x04 // [0x04, asset, amount, receiver, pool]
+    // mstore
+
+    // 0x24 // [0x24, amount, receiver, pool]
+    // mstore
+
+    // 0x44 // [0x44, receiver, pool]
+    // mstore
+
+    // 0x00 // [retSize, pool]
+    // dup1 // [retOffset, retSize, pool]
+    // 0x64 // [inSize, retOffset, retSize, pool]
+    // dup2 // [inOffset, inSize, retOffset, retSize, pool]
+    // dup1 // [value, inOffset, inSize, retOffset, retSize, pool]
+    // dup6 // [pool, value, inOffset, inSize, retOffset, retSize, pool]
+    // gas call // [success, pool]
+
+    // iszero error jumpi // [pool]
+
+    // 0x44 0x24 return
+}
+
+#define macro MAIN() = takes (0) returns (0) {
+    pc calldataload 0xE0 shr    // [funcSig]
+
+    NON_PAYABLE()
+
+    dup1 __FUNC_SIG(supply)            eq supplyJump          jumpi
+
+    LENDING_MARKET_BASE_MAIN()
+
+    // Revert if we don't recognize the function selector
+    0x00 dup1 revert
+
+    supplyJump:
+        SUPPLY()
+
+    error:
+        0x00 dup1 revert
+
+    0x00 dup1 revert
+}

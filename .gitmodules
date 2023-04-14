@@ -12,3 +12,5 @@
 [submodule "contracts/lib/huffmate"]
 	path = contracts/lib/huffmate
 	url = https://github.com/pentagonxyz/huffmate
+[submodule "lib/forge-std"]
+	branch = v1.5.3
