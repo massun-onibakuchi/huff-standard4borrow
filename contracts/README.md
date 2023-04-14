@@ -40,7 +40,10 @@ forge build
 
 3. Test
 
+Set environment variable in `.env` file.
+
 ```bash
+export ETH_RPC_URL='https://eth-mainnet.alchemyapi.io/v2/$YOUR_API_KEY'
 forge test -vvv
 npx hardhat test
 ```

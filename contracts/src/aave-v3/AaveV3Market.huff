@@ -7,6 +7,7 @@
 // Interface
 #define function supply(address, uint256, address) nonpayable returns (uint256)
 #define function withdraw(address, uint256, address) nonpayable returns (uint256)
+#define function borrow(address, uint256, address, address) nonpayable returns (uint256)
 
 // Events
 // #define event Allow(address indexed owner, uint8 indexed account, bool allowed)
@@ -18,6 +19,7 @@
 #define constant GET_RESERVE_TOKENS_FUNC_SELECTOR = 0xd2493b6c00000000000000000000000000000000000000000000000000000000
 #define constant DEPOSIT_FUNC_SELECTOR = 0xe8eda9df00000000000000000000000000000000000000000000000000000000
 #define constant WITHDRAW_FUNC_SELECTOR = 0x69328dec00000000000000000000000000000000000000000000000000000000
+#define constant BORROW_FUNC_SELECTOR = 0xa415bcad00000000000000000000000000000000000000000000000000000000
 
 // function supply(address asset, uint256 amount, address receiver) external returns (uint256)
 #define macro SUPPLY() = takes (0) returns (0) {
@@ -83,10 +85,12 @@
 
     // [GET_RESERVE_TOKENS_FUNC_SELECTOR]
     // 0x00
-    // mstore
+    // mstore  // [asset, amount, receiver, pool]
+    // // mem 0x00: <4bytes>000000
 
-    // dup1
-    // 0x04 mstore
+    // dup1 // [asset, asset, amount, receiver, pool]
+    // 0x04 mstore // [asset, amount, receiver, pool]
+    // // mem 0x00: <4bytes><asset>
 
     // // (address aToken, , ) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(asset);
     // 0x20
@@ -94,12 +98,12 @@
     // 0x24
     // 0x00
     // [PROTOCOL_DATA_PROVIDER]
-    // gas staticcall
+    // gas // [gas, provider, inOffset, inSize, retOffset, retSize, pool]
+    // staticcall // [success, pool]
+    // // mem 0x00: <success>
+    // iszero error jumpi // [pool]
 
-    // iszero error jumpi
-
-    // 0x00
-    // mload // [aToken, asset, amount, receiver, pool]
+    // 0x00 mload // [aToken, asset, amount, receiver, pool]
     // dup3 // [amount, aToken, asset, amount, receiver, pool]
     // address // [this, amount, aToken, asset, amount, receiver, pool]
     // caller // [caller, this, amount, aToken, asset, amount, receiver, pool]
@@ -117,19 +121,19 @@
     // SAFE_APPROVE(0x00)  // [asset, amount, receiver, pool]
 
     // // IPool(pool).withdraw(asset, amount, receiver);
-    
     // [WITHDRAW_FUNC_SELECTOR]
     // 0x00
-    // mstore
+    // mstore // [asset, amount, receiver, pool]
 
-    // 0x04 // [0x04, asset, amount, receiver, pool]
-    // mstore
+    // 0x04 mstore // [amount, receiver, pool]
 
-    // 0x24 // [0x24, amount, receiver, pool]
-    // mstore
+    // 0x24 mstore // [receiver, pool]
 
-    // 0x44 // [0x44, receiver, pool]
-    // mstore
+    // 0x44 mstore // [pool]
+    // // mem [0x00: 0x04]: <4bytes>
+    // // mem [0x04: 0x24]: <asset>
+    // // mem [0x24: 0x44]: <amount>
+    // // mem [0x44: 0x64]: <receiver>
 
     // 0x00 // [retSize, pool]
     // dup1 // [retOffset, retSize, pool]
@@ -144,12 +148,60 @@
     // 0x44 0x24 return
 }
 
+// function borrow(address asset, uint256 amount, address receiver, address owner) external returns (uint256)
+#define macro BORROW() = takes (0) returns (0) {
+    0x64 calldataload      // [owner]
+    0x04 calldataload      // [asset, owner]
+    0x24 calldataload      // [amount, asset, owner]
+    caller                 // [caller, amount, asset, owner]
+    dup4                   // [owner, caller, amount, asset, owner]
+    LOAD_IS_ALLOWED()      // [isAllowed, amount, asset, owner]
+    iszero error jumpi     // [amount, asset, owner]
+
+    // IPool(pool).borrow(asset, amount, 2, REFERRAL_CODE, owner);
+    [BORROW_FUNC_SELECTOR] // [func_sig, amount, asset, owner]
+    0x00 mstore            // [amount, asset, owner]
+    dup3                   // [owner, amount, asset, owner]
+    dup2                   // [amount, owner, amount, asset, owner]
+    dup4                   // [asset, amount, owner, amount, asset, owner]
+    0x04 mstore            // [amount, owner, amount, asset, owner]
+    0x24 mstore            // [owner, amount, asset, owner]
+    0x02                   // [0x02, owner, amount, asset, owner]
+    0x44 mstore            // [owner, amount, asset, owner]
+    0x00                   // [referralCode, owner, amount, asset, owner]
+    0x64 mstore            // [owner, amount, asset, owner]
+    0x84 mstore            // [amount, asset, owner]
+
+    0x00                   // [retSize, amount, asset, owner]
+    dup1                   // [retOffset, retSize, amount, asset, owner]
+    0xa4                   // [inSize, retOffset, retSize, amount, asset, owner]
+    dup2                   // [inOffset, inSize, retOffset, retSize, amount, asset, owner]
+    dup1                   // [value, inOffset, inSize, retOffset, retSize, amount, asset, owner]
+    [POOL]                 // [pool, value, inOffset, inSize, retOffset, retSize, amount, asset, owner]
+    gas call               // [success, amount, asset, owner]
+
+    iszero error jumpi     // [amount, asset, owner]
+    dup1                   // [amount, amount, asset, owner]
+    0x00 mstore            // [amount, asset, owner]
+    // mem 0x00: <amount>
+
+    // IERC20(asset).safeTransfer(receiver, amount);
+    // Input stack:            [receiver, amount, asset]
+    0x44 calldataload      // [receiver, amount, asset, owner]
+    // NOTE: here mem_ptr is set to 0x20 to avlid overwriting [0x00:0x20] memory
+    SAFE_TRANSFER(0x20)    // [owner]
+    // mem 0x00: <amount>
+    //     0x20: SAFE_TRANSFER(0x20) will write to [0x20:~]
+    0x20 0x00 return
+}
+
 #define macro MAIN() = takes (0) returns (0) {
     pc calldataload 0xE0 shr    // [funcSig]
 
     NON_PAYABLE()
 
-    dup1 __FUNC_SIG(supply)            eq supplyJump          jumpi
+    dup1 __FUNC_SIG(supply) eq supplyJump jumpi
+    dup1 __FUNC_SIG(borrow) eq borrowJump jumpi
 
     LENDING_MARKET_BASE_MAIN()
 
@@ -158,9 +210,9 @@
 
     supplyJump:
         SUPPLY()
+    borrowJump:
+        BORROW()
 
     error:
         0x00 dup1 revert
-
-    0x00 dup1 revert
 }
