@@ -19,7 +19,7 @@ abstract contract BaseTestLendingMarket is Test {
     uint256 decimals;
     address receiver = makeAddr("receiver");
 
-    function setUp() public virtual {}
+    function setUp() public virtual;
 
     function _afterSetUp() internal virtual {
         vm.label(asset, "asset");
