@@ -22,4 +22,8 @@ contract TestAaveV3MarketHuff is BaseTestAaveV3Market {
     function _deploy() internal override returns (address _market) {
         _market = HuffDeployer.config().with_addr_constant("POOL", PROVIDER.getPool()).deploy("aave-v3/AaveV3Market");
     }
+
+    function _expectRevert_WhenSenderISNotAllowedByOwner() internal override {
+        vm.expectRevert();
+    }
 }
