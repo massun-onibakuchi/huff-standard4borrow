@@ -1,0 +1,58 @@
+{
+  "name": "huff-eip4borrow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:massun-onibakuchi/huff-eip4borrow.git",
+  "author": "Massun onibakuchi (https://github.com/massun-onibakuchi)",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "common-ts/",
+    "contracts"
+  ],
+  "nohoist": [
+    "**/typechain/*",
+    "**/@typechain/*"
+  ],
+  "private": true,
+  "engines": {
+    "node": ">=15.0.0",
+    "npm": ">=7.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "precommit"
+    }
+  },
+  "lint-staged": {
+    "*.js": "prettier --write",
+    "*.ts": "prettier --write"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "===LINT===": "echo 'Run npm scripts with all workspaces'",
+    "lint:check": "npm run lint:check --workspaces --if-presents",
+    "lint:fix": "npm run lint:fix --workspaces --if-presents",
+    "===TEST===": "========================================",
+    "test": "npm run test --workspaces --if-presents",
+    "test:sol": "yarn workspace contracts test",
+    "===BUILD===": "========================================",
+    "b": "npm run build",
+    "build": "npm run build --workspaces --if-presents",
+    "build:sol": "yarn workspace contracts build",
+    "===DEV===": "========================================",
+    "===START===": "========================================",
+    "start:exporter": "yarn workspace @exporter/server start",
+    "coverage:sol": "forge coverage --config-path=./contracts/foundry.toml"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.14.0",
+    "chai": "^4.3.7",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
+    "prettier": "^2.8.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}

@@ -1,0 +1,14 @@
+[submodule "contracts/lib/openzeppelin-contracts"]
+	path = contracts/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
+	branch = v4.8.1
+[submodule "contracts/lib/forge-std"]
+	path = contracts/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+	branch = v1.4.0
+[submodule "contracts/lib/foundry-huff"]
+	path = contracts/lib/foundry-huff
+	url = https://github.com/huff-language/foundry-huff
+[submodule "contracts/lib/huffmate"]
+	path = contracts/lib/huffmate
+	url = https://github.com/pentagonxyz/huffmate

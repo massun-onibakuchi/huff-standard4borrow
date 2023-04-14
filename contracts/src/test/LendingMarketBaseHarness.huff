@@ -1,0 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "../LendingMarketBase.huff"
+
+#define macro MAIN() = {
+    0x00 calldataload 0xE0 shr    // [func sig]
+    LENDING_MARKET_BASE_MAIN()
+    0x00 dup1 revert
+}

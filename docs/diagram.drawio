@@ -1,0 +1,304 @@
+<mxfile host="65bd71144e" scale="1" border="5">
+    <diagram id="HGQegj_iN1D93pv4uDcK" name="aave/compound">
+        <mxGraphModel dx="1539" dy="1981" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-28" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="78" width="859" height="430" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-27" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="82" width="859" height="430" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="250" y="320" as="targetPoint"/>
+                        <mxPoint x="460.0000000000002" y="190" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="RZ9ShnjNBvvXDEhur2GW-13" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="RZ9ShnjNBvvXDEhur2GW-12" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="460" y="190" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="RZ9ShnjNBvvXDEhur2GW-14" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" target="RZ9ShnjNBvvXDEhur2GW-11" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="460.0000000000002" y="190" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="RZ9ShnjNBvvXDEhur2GW-16" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="800" y="360" as="targetPoint"/>
+                        <mxPoint x="460.0000000000002" y="190" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="aDAI &lt;br&gt;(Interest-bearing Token)" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="95" y="350" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="dDAI (Debt Token)" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="350" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="170" y="360" as="targetPoint"/>
+                        <mxPoint x="460.0000000000002" y="190" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="RZ9ShnjNBvvXDEhur2GW-11" value="dWETH" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="350" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="RZ9ShnjNBvvXDEhur2GW-12" value="aWETH" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="350" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="RZ9ShnjNBvvXDEhur2GW-17" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="730" y="390" as="sourcePoint"/>
+                        <mxPoint x="880" y="390" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="vRZVbyO68PAG42IhnFJH-11" value="Mint/Burn" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="265" y="240" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="3zcZatXE8w60TISH5Kob-14" value="" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3zcZatXE8w60TISH5Kob-11" target="hUUiyXp1XlRsCkL6jOl7-31" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="459" y="130" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3zcZatXE8w60TISH5Kob-11" value="Depositor / Borrower / Liquidator&amp;nbsp;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="-20" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3zcZatXE8w60TISH5Kob-15" value="Execute Deposit / Borrow / Liquidate" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="80" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-11" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" target="hUUiyXp1XlRsCkL6jOl7-16" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1087" y="316" as="targetPoint"/>
+                        <mxPoint x="1297" y="186" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-12" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="hUUiyXp1XlRsCkL6jOl7-20" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1297.0000000000002" y="186" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-13" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" target="hUUiyXp1XlRsCkL6jOl7-19" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1297" y="186" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-14" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1637" y="356" as="targetPoint"/>
+                        <mxPoint x="1297" y="186" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-16" value="cDAI &lt;br&gt;(Interest-bearing Token)" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="932" y="346" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-17" value="DAI Debt Token" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1077" y="346" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-18" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" target="hUUiyXp1XlRsCkL6jOl7-17" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1007" y="356" as="targetPoint"/>
+                        <mxPoint x="1297" y="186" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-19" value="WETH Debt Token" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1417" y="346" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-20" value="cWETH" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1277" y="346" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-21" value="Mint/Burn" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1102" y="236" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-23" value="" style="edgeStyle=none;html=1;entryX=0.511;entryY=0.21;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="hUUiyXp1XlRsCkL6jOl7-24" target="hUUiyXp1XlRsCkL6jOl7-35" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1296" y="126" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-24" value="Depositor / Borrower / Liquidator&amp;nbsp;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="1277" y="-24" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-25" value="Execute Deposit / Borrow / Liquidate" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1077" y="76" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-26" value="Aave" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="38" y="91" width="45" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-29" value="Compound V3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="923" y="88" width="95" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-31" value="Pool" style="shape=loopLimit;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="413" y="114" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="hUUiyXp1XlRsCkL6jOl7-35" value="Comet (cUSDC Ext)" style="shape=manualInput;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1255" y="106" width="80" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="HIgVIsyKfz8McZVa9hTo" name="erc4626">
+        <mxGraphModel dx="1154" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="4JiHSe_HXGlTqya4tsxp" name="borrowing-aggregator">
+        <mxGraphModel dx="2449" dy="2184" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-15" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="55" y="240" width="1045" height="690" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-23" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="600" width="390" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-24" value="Aave V3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="555" y="615" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-21" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="600" width="390" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-2" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="97NghZ7lzHSOVYeGn4HH-1" target="97NghZ7lzHSOVYeGn4HH-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="97NghZ7lzHSOVYeGn4HH-1" value="AaveV3 wrapper" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="643" y="490" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-5" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="97NghZ7lzHSOVYeGn4HH-2" target="97NghZ7lzHSOVYeGn4HH-4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="97NghZ7lzHSOVYeGn4HH-2" value="CompoundV3 wrapper" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="490" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-3" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="97NghZ7lzHSOVYeGn4HH-3" target="ppjegL5tvGdDO8LhmPoS-1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-4" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="97NghZ7lzHSOVYeGn4HH-3" target="ppjegL5tvGdDO8LhmPoS-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="97NghZ7lzHSOVYeGn4HH-3" value="AaveV3 Entry point contract" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="643" y="650" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-8" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="97NghZ7lzHSOVYeGn4HH-4" target="WHNlwzRMfL49cXGA43YR-6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-9" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="97NghZ7lzHSOVYeGn4HH-4" target="WHNlwzRMfL49cXGA43YR-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="97NghZ7lzHSOVYeGn4HH-4" value="CompoundV3 &lt;br&gt;Entry point&lt;br&gt;contfact" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="650" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ppjegL5tvGdDO8LhmPoS-1" value="aDAI &lt;br&gt;(Interest-bearing Token)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="830" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="ppjegL5tvGdDO8LhmPoS-2" value="dDAI (Debt Token)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="700" y="830" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-1" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="840" y="860" as="sourcePoint"/>
+                        <mxPoint x="900" y="860" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-6" value="Compund V3 cDAI &lt;br&gt;(Interest-bearing Token)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="830" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-7" value="Compund V3 DebtDAI (Debt Token)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="830" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-11" value="Routing" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-10" target="97NghZ7lzHSOVYeGn4HH-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-12" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-10" target="97NghZ7lzHSOVYeGn4HH-1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-10" value="Borrow Aggregator&lt;br&gt;(Router)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="450" y="310" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-13" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="-20" width="520" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-14" value="Nextjs or something like that" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="55" y="180" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-16" value="Ethereum&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="55" y="900" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-41" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-17" target="WHNlwzRMfL49cXGA43YR-32">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-17" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="-130" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-20" value="Front end&lt;br&gt;(Lend/Borrow page)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="20" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-22" value="Compund V3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="135" y="615" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-26" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="450.5" y="864.5" as="sourcePoint"/>
+                        <mxPoint x="510.5" y="864.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-27" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-17" target="WHNlwzRMfL49cXGA43YR-20">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="580" y="90" as="sourcePoint"/>
+                        <mxPoint x="630" y="40" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-29" value="Deposit / Borrow tokens&amp;nbsp;" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-20" target="WHNlwzRMfL49cXGA43YR-10">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="580" y="150" as="sourcePoint"/>
+                        <mxPoint x="630" y="100" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-31" value="" style="endArrow=classic;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-32" target="WHNlwzRMfL49cXGA43YR-21">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="250" y="50" as="sourcePoint"/>
+                        <mxPoint x="630" y="230" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-38" value="read APRs from a contract" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="WHNlwzRMfL49cXGA43YR-31">
+                    <mxGeometry x="-0.7072" y="1" relative="1" as="geometry">
+                        <mxPoint y="1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-33" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-32" target="WHNlwzRMfL49cXGA43YR-23">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-47" value="read APRs via API" style="edgeStyle=none;html=1;fontSize=14;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-32" target="WHNlwzRMfL49cXGA43YR-46">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-32" value="Front end&lt;br&gt;(show each protoco's supply/borrow APYl)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="165" y="20" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-37" value="How can i fetch APR?&lt;br&gt;1) off-chain API (Compund has suhc an API but Aave doesn't, i guess)&lt;br&gt;2) fetch APR via contracts. Compund and Aave provides contracts that can be used to calculate APR. but these are implemented in their own way.&lt;br&gt;3) it is best if we can create a few readonly methods on Borrow Aggregator contract." style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fontSize=14;position2=0.94;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-90" y="290" width="310" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-43" value="Wrappers comply with our standard API for borrow." style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fontSize=14;position2=0.22;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="420" width="180" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-44" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="WHNlwzRMfL49cXGA43YR-32" target="WHNlwzRMfL49cXGA43YR-10">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="245" y="100" as="sourcePoint"/>
+                        <mxPoint x="510" y="310" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-46" value="Compound V3&lt;br&gt;Off-chain&lt;br&gt;API service" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="-130" y="130" width="130" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="WHNlwzRMfL49cXGA43YR-48" value="Proposed Designs&lt;br&gt;1) This call can be `degatecall`&amp;nbsp; if all of those wrappers are stateless contract unless i am not wrong.&lt;br&gt;2) This call can be normal message call by `call`" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fontSize=14;position2=0;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="600" y="250" width="280" height="150" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
