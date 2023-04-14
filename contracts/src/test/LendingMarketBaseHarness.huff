@@ -2,8 +2,24 @@
 
 #include "../LendingMarketBase.huff"
 
+#define function checkRevertIfNotAllowed(address, address) nonpayable
+
+#define macro CHECK_REVERT_IF_NOT_ALLOWED() = {
+    0x024 calldataload
+    0x04 calldataload
+    // stack input: [owner, account]
+    REQUIRE_ALLOWED()
+}
+
 #define macro MAIN() = {
     0x00 calldataload 0xE0 shr    // [func sig]
+
+    dup1 __FUNC_SIG(checkRevertIfNotAllowed) eq checkRevertJump jumpi
+    
     LENDING_MARKET_BASE_MAIN()
+
     0x00 dup1 revert
+
+    checkRevertJump:
+        CHECK_REVERT_IF_NOT_ALLOWED()
 }

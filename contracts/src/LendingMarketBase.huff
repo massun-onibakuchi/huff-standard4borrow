@@ -45,6 +45,22 @@
     0x20 0x00 return
 }
 
+// TODO: Refactor
+#define macro REQUIRE_ALLOWED() = takes (2) returns (0) {
+    // stack input: [owner, account]
+    dup2 dup2 // [owner, account, owner, account]
+    [ALLOWED_ACCOUNTS_SLOT]                 // [slot, owner, account, owner, account]
+    LOAD_ELEMENT_FROM_KEYS_2D(0x00)         // [isAllowed, owner, account]
+
+    swap2 // [owner, account, isAllowed]
+    eq // [isOwner, isAllowed]
+    or // [isOwner or isAllowed]
+    iszero error jumpi // []
+
+    error:
+        0x00 dup1 revert // []
+}   
+
 // Function Dispatching
 #define macro LENDING_MARKET_BASE_MAIN() = takes (1) returns (1) {
     // Identify which function is being called.
