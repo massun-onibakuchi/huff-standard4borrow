@@ -18,7 +18,7 @@ Install dependencies
 yarn
 cd contracts && forge install
 # If `forge install` doesn't work correctly, try the following command for each .gitmodules in contracts directory.
-# forge install https://github.com/openzeppelin/openzeppelin-contracts
+# e.g forge install https://github.com/openzeppelin/openzeppelin-contracts
 ```
 
 Each package has its own README. See the following links for more details.

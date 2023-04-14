@@ -8,7 +8,7 @@ import {BaseTestLendingMarketBase} from "./BaseTestLendingMarketBase.sol";
 
 contract TestLendingMarketBaseHuff is BaseTestLendingMarketBase {
     function setUp() public override {
-        market = HuffDeployer.config().deploy("src/test/LendingMarketBaseHarness");
+        market = HuffDeployer.config().deploy("test/LendingMarketBaseHarness");
         _afterSetUp();
     }
 }

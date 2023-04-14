@@ -2,13 +2,20 @@
 
 #include "../LendingMarketBase.huff"
 
-#define function checkRevertIfNotAllowed(address, address) nonpayable
+#define function checkRevertIfNotAllowed(address, address) nonpayable returns (bool)
 
 #define macro CHECK_REVERT_IF_NOT_ALLOWED() = {
     0x024 calldataload
     0x04 calldataload
     // stack input: [owner, account]
-    REQUIRE_ALLOWED()
+    LOAD_IS_ALLOWED()
+    iszero error jumpi // [amount, asset, owner]
+
+    0x01 0x00 mstore
+    0x20 0x00 return // return `true`
+
+    error:
+        0x00 0x00 revert
 }
 
 #define macro MAIN() = {

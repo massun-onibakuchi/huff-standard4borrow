@@ -46,19 +46,15 @@
 }
 
 // TODO: Refactor
-#define macro REQUIRE_ALLOWED() = takes (2) returns (0) {
+#define macro LOAD_IS_ALLOWED() = takes (2) returns (1) {
     // stack input: [owner, account]
     dup2 dup2 // [owner, account, owner, account]
     [ALLOWED_ACCOUNTS_SLOT]                 // [slot, owner, account, owner, account]
     LOAD_ELEMENT_FROM_KEYS_2D(0x00)         // [isAllowed, owner, account]
 
-    swap2 // [owner, account, isAllowed]
+    swap2 // [account, owner, isAllowed]
     eq // [isOwner, isAllowed]
     or // [isOwner or isAllowed]
-    iszero error jumpi // []
-
-    error:
-        0x00 dup1 revert // []
 }   
 
 // Function Dispatching

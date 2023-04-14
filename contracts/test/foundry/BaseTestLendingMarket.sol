@@ -53,7 +53,10 @@ abstract contract BaseTestLendingMarket is Test {
         uint256 expectedBal = _convertToUnderlying(amount);
         ILendingMarket(market).supply(asset, amount, address(this));
         //execution
+        // https://www.rareskills.io/ethereum-gas-price-calculator
+        uint256 gas = gasleft();
         uint256 withdrawn = ILendingMarket(market).withdraw(asset, amount, receiver);
+        console2.log("gasUsed :>>", gas - gasleft());
         //assert
         assertEq(withdrawn, expectedBal, "withdrawn amount");
         assertEq(IERC20(asset).balanceOf(address(this)), initialBalance - amount, "sender balance");
@@ -67,7 +70,9 @@ abstract contract BaseTestLendingMarket is Test {
         ILendingMarket(market).supply(asset, 1000 * amount, address(this));
         _setUpBeforeTestBorrow();
         //execution
+        uint256 gas = gasleft();
         uint256 borrowed = ILendingMarket(market).borrow(asset, amount, receiver, address(this));
+        console2.log("gasUsed :>>", gas - gasleft());
         //assert
         assertEq(borrowed, amount, "borrowed amount");
         assertEq(IERC20(asset).balanceOf(address(this)), initialBalance - 1000 * amount, "sender balance");
@@ -80,16 +85,37 @@ abstract contract BaseTestLendingMarket is Test {
         uint256 amount = 10 ** decimals;
         ILendingMarket(market).supply(asset, 1000 * amount, address(this));
         _setUpBeforeTestBorrow();
-        //execution
         vm.prank(address(this));
         ILendingMarket(market).allow(receiver, true);
+        //execution
+        uint256 gas = gasleft();
         vm.prank(receiver);
         uint256 borrowed = ILendingMarket(market).borrow(asset, amount, receiver, address(this));
+        console2.log("gasUsed :>>", gas - gasleft());
         //assert
         assertEq(borrowed, amount, "borrowed amount");
         assertEq(IERC20(asset).balanceOf(address(this)), initialBalance - 1000 * amount, "sender balance");
         assertEq(IERC20(asset).balanceOf(receiver), amount, "reciever balance");
         assertEq(IERC20(asset).balanceOf(market), 0, "market balance");
+    }
+
+    function testBorrow_RevertIfSenderIsNotAllowedByOwner() public {
+        //setUp
+        uint256 amount = 10 ** decimals;
+        ILendingMarket(market).supply(asset, 1000 * amount, address(this));
+        _setUpBeforeTestBorrow();
+        //execution
+        vm.prank(address(this));
+        // `this` contract is not allowed to borrow on behalf of `owner`
+        ILendingMarket(market).allow(receiver, false);
+        //assert
+        _expectRevert_WhenSenderISNotAllowedByOwner();
+        vm.prank(receiver);
+        ILendingMarket(market).borrow(asset, amount, receiver, address(this));
+    }
+
+    function _expectRevert_WhenSenderISNotAllowedByOwner() internal virtual {
+        vm.expectRevert("LendingMarketBase: not allowed");
     }
 
     function testRepay_Ok() public {
