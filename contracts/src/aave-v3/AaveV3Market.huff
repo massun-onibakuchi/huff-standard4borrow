@@ -14,7 +14,7 @@
 
 // Constants
 /// @notice Aave V3 Pool address ethereum mainnet
-#define constant PROTOCOL_DATA_PROVIDER = 0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E
+#define constant POOL_DATA_PROVIDER = 0x7B4EB56E7CD4b454BA8ff71E4518426369a138a3
 #define constant POOL = 0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2
 #define constant GET_RESERVE_TOKENS_FUNC_SELECTOR = 0xd2493b6c00000000000000000000000000000000000000000000000000000000
 #define constant DEPOSIT_FUNC_SELECTOR = 0xe8eda9df00000000000000000000000000000000000000000000000000000000
@@ -46,7 +46,6 @@
     SAFE_APPROVE(0x00)  // [asset, amount, receiver, pool]
 
     // IPool(pool).deposit(asset, amount, receiver, REFERRAL_CODE);
-    
     [DEPOSIT_FUNC_SELECTOR]
     0x00
     mstore
@@ -78,74 +77,65 @@
 
 // function withdraw(address asset, uint256 amount, address receiver) external returns (uint256)
 #define macro WITHDRAW() = takes (0) returns (0) {
-    // [POOL]
-    // 0x44 calldataload    // [receiver, pool]
-    // 0x24 calldataload    // [amount, receiver, pool]
-    // 0x04 calldataload    // [asset, amount, receiver, pool]
+    [POOL]
+    0x44 calldataload           // [receiver, pool]
+    0x24 calldataload           // [amount, receiver, pool]
+    0x04 calldataload           // [asset, amount, receiver, pool]
 
-    // [GET_RESERVE_TOKENS_FUNC_SELECTOR]
-    // 0x00
-    // mstore  // [asset, amount, receiver, pool]
-    // // mem 0x00: <4bytes>000000
+    // (address aToken, , ) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(asset);
+    [GET_RESERVE_TOKENS_FUNC_SELECTOR]
+    0x00 mstore                 // [asset, amount, receiver, pool]
+    dup1                        // [asset, asset, amount, receiver, pool]
+    0x04 mstore                 // [asset, amount, receiver, pool]
+    // mem 0x00: <4bytes><asset>
+    0x20
+    0x00
+    0x24
+    0x00
+    [POOL_DATA_PROVIDER]
+    gas                         // [gas, provider, inOffset, inSize, retOffset, retSize, pool]
+    staticcall                  // [success, pool]
+    iszero error jumpi          // [pool]
+    // mem: [0x00: 0x20]: <aToken>
 
-    // dup1 // [asset, asset, amount, receiver, pool]
-    // 0x04 mstore // [asset, amount, receiver, pool]
-    // // mem 0x00: <4bytes><asset>
+    // IERC20(aToken).safeTransferFrom(msg.sender, address(this), amount)
+    0x00 mload                  // [aToken, asset, amount, receiver, pool]
+    dup1                        // [aToken, aToken, asset, amount, receiver, pool]
+    dup4                        // [amount, aToken, aToken, asset, amount, receiver, pool]
+    address                     // [this, amount, aToken, aToken, asset, amount, receiver, pool]
+    caller                      // [caller, this, amount, aToken, aToken, asset, amount, receiver, pool]
+    // stack input: [from, to, amount, aToken]
+    SAFE_TRANSFER_FROM(0x00)    // [aToken, asset, amount, receiver, pool]
 
-    // // (address aToken, , ) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(asset);
-    // 0x20
-    // 0x00
-    // 0x24
-    // 0x00
-    // [PROTOCOL_DATA_PROVIDER]
-    // gas // [gas, provider, inOffset, inSize, retOffset, retSize, pool]
-    // staticcall // [success, pool]
-    // // mem 0x00: <success>
-    // iszero error jumpi // [pool]
+    // IERC20(aToken).safeApprove(pool, amount)
+    dup3                        // [amount, aToken, asset, amount, receiver, pool]
+    dup6                        // [pool, amount ,aToken, asset, amount, receiver, pool]
+    // stack input: [to, amount, aToken]
+    SAFE_APPROVE(0x00)          // [asset, amount, receiver, pool]
 
-    // 0x00 mload // [aToken, asset, amount, receiver, pool]
-    // dup3 // [amount, aToken, asset, amount, receiver, pool]
-    // address // [this, amount, aToken, asset, amount, receiver, pool]
-    // caller // [caller, this, amount, aToken, asset, amount, receiver, pool]
+    // IPool(pool).withdraw(asset, amount, receiver);
+    [WITHDRAW_FUNC_SELECTOR]
+    0x00
+    mstore                      // [asset, amount, receiver, pool]
+    0x04 mstore                 // [amount, receiver, pool]
+    0x24 mstore                 // [receiver, pool]
+    0x44 mstore                 // [pool]
+    // mem [0x00: 0x04]: <func_sig>
+    // mem [0x04: 0x24]: <asset>
+    // mem [0x24: 0x44]: <amount>
+    // mem [0x44: 0x64]: <receiver>
 
-    // // IERC20(aToken).safeTransferFrom(msg.sender, address(this), amount)
-    // // stack input: [from, to, amount, aToken]
-    // SAFE_TRANSFER_FROM(0x00) // [asset, amount, receiver, pool]
+    0x20                        // [retSize, pool]
+    0x00                        // [retOffset, retSize, pool]
+    0x64                        // [inSize, retOffset, retSize, pool]
+    dup2                        // [inOffset, inSize, retOffset, retSize, pool]
+    dup1                        // [value, inOffset, inSize, retOffset, retSize, pool]
+    dup6                        // [pool, value, inOffset, inSize, retOffset, retSize, pool]
+    gas call                    // [success, pool]
 
-    // dup1 // [aToken, asset, amount, receiver, pool]
-    // dup3 // [amount aToken, asset, amount, receiver, pool]
-    // dup6 // [pool, amount ,aToken, asset, amount, receiver, pool]
+    iszero error jumpi          // [pool]
 
-    // // IERC20(aToken).safeApprove(pool, amount)
-    // // stack input: [to, amount, asset]
-    // SAFE_APPROVE(0x00)  // [asset, amount, receiver, pool]
-
-    // // IPool(pool).withdraw(asset, amount, receiver);
-    // [WITHDRAW_FUNC_SELECTOR]
-    // 0x00
-    // mstore // [asset, amount, receiver, pool]
-
-    // 0x04 mstore // [amount, receiver, pool]
-
-    // 0x24 mstore // [receiver, pool]
-
-    // 0x44 mstore // [pool]
-    // // mem [0x00: 0x04]: <4bytes>
-    // // mem [0x04: 0x24]: <asset>
-    // // mem [0x24: 0x44]: <amount>
-    // // mem [0x44: 0x64]: <receiver>
-
-    // 0x00 // [retSize, pool]
-    // dup1 // [retOffset, retSize, pool]
-    // 0x64 // [inSize, retOffset, retSize, pool]
-    // dup2 // [inOffset, inSize, retOffset, retSize, pool]
-    // dup1 // [value, inOffset, inSize, retOffset, retSize, pool]
-    // dup6 // [pool, value, inOffset, inSize, retOffset, retSize, pool]
-    // gas call // [success, pool]
-
-    // iszero error jumpi // [pool]
-
-    // 0x44 0x24 return
+    0x44 0x24 return
 }
 
 // function borrow(address asset, uint256 amount, address receiver, address owner) external returns (uint256)
@@ -202,6 +192,7 @@
 
     dup1 __FUNC_SIG(supply) eq supplyJump jumpi
     dup1 __FUNC_SIG(borrow) eq borrowJump jumpi
+    dup1 __FUNC_SIG(withdraw) eq withdrawJump jumpi
 
     LENDING_MARKET_BASE_MAIN()
 
@@ -212,6 +203,8 @@
         SUPPLY()
     borrowJump:
         BORROW()
+    withdrawJump:
+        WITHDRAW()
 
     error:
         0x00 dup1 revert

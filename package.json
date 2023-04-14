@@ -40,8 +40,6 @@
     "build": "npm run build --workspaces --if-presents",
     "build:sol": "yarn workspace contracts build",
     "===DEV===": "========================================",
-    "===START===": "========================================",
-    "start:exporter": "yarn workspace @exporter/server start",
     "coverage:sol": "forge coverage --config-path=./contracts/foundry.toml"
   },
   "devDependencies": {

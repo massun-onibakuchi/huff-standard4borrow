@@ -26,4 +26,6 @@ contract TestAaveV3MarketHuff is BaseTestAaveV3Market {
     function _expectRevert_WhenSenderISNotAllowedByOwner() internal override {
         vm.expectRevert();
     }
+
+    function testRepay_Ok() public override {}
 }
