@@ -34,7 +34,7 @@ contract BorrowFiAggregator is Ownable {
             address wrapper = data[i].wrapper;
 
             require(isWhitelistedWrapper(wrapper), "aggregator: Wrapper is not whitelisted");
-            ILendingMarket(wrapper).borrow(asset,  data[i].amount, msg.sender, msg.sender);
+            ILendingMarket(wrapper).borrow(asset, data[i].amount, msg.sender, msg.sender);
 
             unchecked {
                 ++i;

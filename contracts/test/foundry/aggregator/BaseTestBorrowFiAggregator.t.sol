@@ -63,7 +63,7 @@ abstract contract BaseTestBorrowFiAggregator is Test {
         // setUp
         // execution
         vm.prank(owner);
-        aggregator.setWrapper(address(0xf00),value);
+        aggregator.setWrapper(address(0xf00), value);
         // assert
         assertEq(aggregator.isWhitelistedWrapper(address(0xf00)), value, "wrapper is not set correctly");
     }

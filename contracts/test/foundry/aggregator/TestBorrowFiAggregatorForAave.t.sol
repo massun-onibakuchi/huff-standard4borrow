@@ -58,11 +58,7 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
 
     function testSetUp_Ok() public override {
         assertEq(aggregator.owner(), owner, "owner is not set correctly");
-        assertEq(
-            aggregator.isWhitelistedWrapper(market),
-            true,
-            "wrapperType is not set correctly"
-        );
+        assertEq(aggregator.isWhitelistedWrapper(market), true, "wrapperType is not set correctly");
     }
 
     function testAggregateBorrow_Ok() public override {
