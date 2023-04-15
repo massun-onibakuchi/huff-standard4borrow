@@ -31,7 +31,8 @@ const BorrowView = (props: BorrowViewProps) => {
       fontWeight: 'bold',
       py: 12,
       px: 12,
-      borderRadius: 20
+      borderRadius: 20,
+      backgroundColor: 'white'
     }}>
       <Box sx={{
         display: 'flex',
@@ -49,8 +50,8 @@ const BorrowView = (props: BorrowViewProps) => {
           color="info"
           sx={{minWidth: 120}}
         >
-          <MenuItem value={'ETH'}>ETH</MenuItem>
           <MenuItem value={'USDC'}>USDC</MenuItem>
+          <MenuItem value={'ETH'}>ETH</MenuItem>
         </Select>
       </Box>
       <hr></hr>

@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 import Header from "./components/Header"
 import BorrowView from "./components/BorrowView"
+import Footer from "./components/Footer"
 
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -19,6 +20,7 @@ const App = () => {
         <Title>Borrow Aggregator for DeFi</Title>
         {isConnected ? <BorrowView myAddress={address} /> : <p>You should connect the wallet to borrow.</p>}
       </main>
+      <Footer />
     </Container>
   )
 }
