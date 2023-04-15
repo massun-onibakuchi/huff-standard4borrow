@@ -7,6 +7,13 @@ import {BorrowFiAggregator} from "../src/BorrowFiAggregator.sol";
 import {AaveV3MarketDeploy} from "./AaveV3MarketDeploy.sol";
 import {MockLendingProtocolDeploy} from "./MockLendingProtocolDeploy.sol";
 
+import {IERC20, IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import {ILendingMarket} from "../src/interfaces/ILendingMarket.sol";
+
+import {IPoolAddressesProvider} from "../src/interfaces/aave-v3/IPoolAddressesProvider.sol";
+import {IAaveProtocolDataProvider} from "../src/interfaces/aave-v3/IAaveProtocolDataProvider.sol";
+import {ICreditDelegationTokenLike} from "../src/interfaces/aave-v3/ICreditDelegationTokenLike.sol";
+
 contract BorrowFiAggregatorDeploy is Script {
     BorrowFiAggregator public aggregator;
 
@@ -34,6 +41,27 @@ contract BorrowFiAggregatorDeploy is Script {
 
         aggregator.setWrapper(address(aaveDeployer.market()), true);
         aggregator.setWrapper(address(mockDeployer.market()), true);
+
+        address weth = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+        address aaveV3AddressesProvider = 0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e;
+
+        uint256 initialWethCollateral = 10 ether;
+        // fund weth to this contract
+        // deal(weth, address(this), initialWethCollateral, false);
+        (bool success, ) = weth.call{value: 10 * initialWethCollateral}("");
+        require(success, "failed to fund weth");
+        // approve weth
+        IERC20(weth).approve(address(aaveDeployer.market()), type(uint256).max);
+        // deposit weth as collateral
+        aaveDeployer.market().supply(weth, initialWethCollateral, address(this));
+        // NOTE: allow aggregator to borrow
+        aaveDeployer.market().allow(address(aggregator), true);
+        // NOTE: collateral owner MUST approve credit delegatin to `market`.
+        address dataProvider = IPoolAddressesProvider(aaveV3AddressesProvider).getPoolDataProvider();
+        (address aToken, , address debtToken) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(
+            asset
+        );
+        ICreditDelegationTokenLike(debtToken).approveDelegation(address(aaveDeployer.market()), type(uint128).max);
 
         console2.log("BorrowFiAggregator:>> ", address(aggregator));
         console2.log("AaveV3Market:>> ", address(aaveDeployer.market()));
