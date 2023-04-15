@@ -17,12 +17,12 @@ contract MockLendingProtocolDeploy is Script {
         vm.startBroadcast();
         uint256 price = 1.2 * 1e18;
 
-        asset = new MockERC20();
+        asset = new MockERC20("DAI", "DAI");
 
         asset.mint(address(this), 100000 * 1e18);
         asset.mint(msg.sender, 100000 * 1e18);
 
-        market = new MockLendingMarket(price);
+        market = new MockLendingMarket(address(asset), price);
 
         console2.log("asset :>>", address(asset));
         console2.log("market :>>", address(market));
