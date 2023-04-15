@@ -14,4 +14,6 @@ bal=$(cast call --rpc-url=http://127.0.0.1:8545 $DAI "balanceOf(address)(uint256
 
 echo $bal
 
-# orge script --rpc-url=http://localhost:8545 --broadcast --private-key=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --sender=0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266 script/BorrowFiAggregatorDeploy.sol
+# anvil --fork-url=$ETH_RPC_URL --fork-block-number=16990000
+# ./scripts/fund.sh
+# forge script --rpc-url=http://localhost:8545 --broadcast --private-key=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --sender=0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266 script/BorrowFiAggregatorDeploy.sol
