@@ -18,8 +18,11 @@ contract MockLendingMarket is LendingMarketBase {
         string memory name = IERC20Metadata(_asset).name();
         string memory symbol = IERC20Metadata(_asset).symbol();
         asset = MockERC20(_asset);
-        ibToken = new MockERC20(name, symbol);
-        debtToken = new MockERC20(name, symbol);
+        ibToken = new MockERC20(
+            string.concat(name, " Interest Bearing Token"),
+            string.concat(symbol, "-InterestBearingToken")
+        );
+        debtToken = new MockERC20(string.concat(name, " Debt Token"), string.concat(symbol, "-DebtToken"));
         price = _price;
     }
 
