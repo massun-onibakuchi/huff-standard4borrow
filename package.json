@@ -35,6 +35,7 @@
     "===TEST===": "========================================",
     "test": "npm run test --workspaces --if-presents",
     "test:sol": "yarn workspace contracts test",
+    "test:ts": "echo '*******TEST_SKIP******'; exit 1",
     "===BUILD===": "========================================",
     "b": "npm run build",
     "build": "npm run build --workspaces --if-presents",

@@ -2,7 +2,7 @@
 
 > This repo is generated from [massun-onibakuchi/hardhat-foundry-template](https://github.com/massun-onibakuchi/hardhat-foundry-template/).
 
-## Features
+### Features
 
 - [evm-run](https://github.com/zemse/evm-run) (Run EVM code from console or file, on local or mainnet fork)
 - [Static Analyzer](.github/workflows/slither.yml) ([Slither](https://github.com/crytic/slither))
@@ -36,6 +36,12 @@ forge install
 
 ```bash
 forge build
+```
+
+3. Deploy a mock lending protocol
+
+```bash
+forge script --rpc-url=<YOUR_RPC_URL>  script/MockLendingProtocolDeploy.s.sol
 ```
 
 3. Test

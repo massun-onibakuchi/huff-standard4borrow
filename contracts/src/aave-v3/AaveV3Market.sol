@@ -35,7 +35,7 @@ contract AaveV3Market is LendingMarketBase {
         IERC20(asset).safeApprove(pool, amount);
 
         IPool(pool).deposit(asset, amount, receiver, REFERRAL_CODE);
-        // tbh we shouldn't trust external contracts. 
+        // tbh we shouldn't trust external contracts.
         return amount;
     }
 
