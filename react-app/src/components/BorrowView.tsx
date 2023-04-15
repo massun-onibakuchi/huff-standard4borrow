@@ -1,6 +1,7 @@
-import styled from "styled-components"
+import { useState } from 'react';
+import { Button, Box, Container, TextField, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 
-import { BigNumber } from "ethers"
+import { BigNumber } from 'ethers'
 
 
 interface BorrowViewProps {
@@ -17,73 +18,66 @@ const BorrowView = (props: BorrowViewProps) => {
   //     props.myAddress,
   //   ],
   // })
-  // const { write } = useMockLendingMarketBorrow(config)
+  // const { write } = useMockLendingMarketBorrow(config)　
+  const [coin, setCoin] = useState<string>('')
+  const [collateral, setCollateral] = useState<number>(0)
+  const [rate, setRate] = useState<number>(0)
+  const handleChangeCoinType = (e: SelectChangeEvent) => {
+    setCoin(e.target.value as string)
+  }
   return (
-    <Container>
-      <Info>
+    <Container sx={{
+      boxShadow: 2,
+      fontWeight: 'bold',
+      py: 12,
+      px: 12,
+      borderRadius: 20
+    }}>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      }}>
         <p>Amount to Borrow</p>
-        <Amount type="number" min={0} />
-        <Coins name="coin">
-          <option value="USDC">USDC</option>
-          <option value="ETH">ETH</option>
-        </Coins>
-      </Info>
+        <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
+        <Select
+          labelId="select-coins"
+          id="select-coints"
+          value={coin}
+          label="Age"
+          onChange={handleChangeCoinType}
+          color="info"
+          sx={{minWidth: 120}}
+        >
+          <MenuItem value={'ETH'}>ETH</MenuItem>
+          <MenuItem value={'USDC'}>USDC</MenuItem>
+        </Select>
+      </Box>
       <hr></hr>
-      <Info>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      }}>
         <p>Collateral Required</p>
-        <p>5.12</p>
+        <p>{collateral}</p>
         <p>ETH</p>
-      </Info>
-      <Info>
+      </Box>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      }}>
         <p>Rate</p>
-        <p>2.88%</p>
+        <p>{`${rate}%`}</p>
         <p>APY</p>
-      </Info>
-      <Confirm type="button" onClick={() => {}}>
+      </Box>
+      <Button size="large" variant="outlined" type="button" onClick={() => {}}>
         Confirm Borrow
-      </Confirm>
+      </Button>
     </Container>
   )
 }
 
 export default BorrowView
 
-const Container = styled.div`
-  background-color: #d9d9d9;
-  padding: 32px;
-`
-
-const Amount = styled.input`
-  background-color: #d9d9d9;
-  font-size: 20px;
-  font-weight: bold;
-  border: none;
-  border-bottom: 1px solid black;
-`
-
-const Coins = styled.select`
-  background-color: #d9d9d9;
-  width: 132px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-`
-
-const Info = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  text-align: left;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 8px 64px;
-`
-
-const Confirm = styled.button`
-  background-color: #d9d9d9;
-  width: 240px;
-  height: 64px;
-  border: solid 1px;
-  font-size: 20px;
-  font-weight: bold;
-`

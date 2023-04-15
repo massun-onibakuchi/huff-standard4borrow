@@ -1,5 +1,7 @@
-import styled from "styled-components"
+import {Container} from "@mui/material";
 import logo from "../assets/logo.png"
+
+import { Button } from "@mui/material";
 
 interface HeaderProps {
   onClickConnect?: (e: any) => void;
@@ -7,32 +9,17 @@ interface HeaderProps {
 }
 
 const Header = (props: HeaderProps) => {
-  return <Container>
-    <Logo src={logo} />
-    <button onClick={props.onClickConnect}>{props.isConnected ? "Disconnect" : "Connect"}</button>
-  </Container>
+  return (
+    <Container sx={{
+      backgroundColor: 'transparent',
+      display: 'flex',
+      justfyContent: 'space-between',
+      px: 16,
+    }}>
+      <img src={logo} ></img>
+      <Button variant="contained" sx={{borderRadius: 10}} onClick={props.onClickConnect}>{props.isConnected ? 'Disconnect' : 'Connect'}</Button>
+    </Container>
+  )
 }
 
 export default Header
-
-const Container = styled.div`
-  display: flex;
-  background-color: #D7D7D7;
-  justify-content: space-between;
-  padding: 16px 48px;
-
-  & > button {
-    font-size: 28px;
-    margin: 0;
-    text-align: center;
-    border: none;
-    background-color: transparent;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`
-
-const Logo = styled.img`
-  height: 64px;
-`
