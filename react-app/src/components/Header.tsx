@@ -13,8 +13,7 @@ const Header = (props: HeaderProps) => {
     <Container sx={{
       backgroundColor: 'transparent',
       display: 'flex',
-      justfyContent: 'space-between',
-      px: 16,
+      justifyContent: 'space-between',
     }}>
       <img src={logo} ></img>
       <Button variant="contained" sx={{borderRadius: 10}} onClick={props.onClickConnect}>{props.isConnected ? 'Disconnect' : 'Connect'}</Button>
