@@ -33,7 +33,7 @@ contract TestBorrowFiAggregatorForMock is BaseTestBorrowFiAggregator {
 
         deal(asset, market, 10000 * (1e18), true);
     }
-    
+
     function testSetUp_Ok() public override {
         assertEq(aggregator.owner(), owner, "owner is not set correctly");
         assertEq(

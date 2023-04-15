@@ -2,6 +2,8 @@
 pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
+import {HuffDeployer} from "foundry-huff/HuffDeployer.sol";
+
 import {BaseTestBorrowFiAggregator} from "./BaseTestBorrowFiAggregator.t.sol";
 
 import {BorrowFiAggregator} from "../../../src/BorrowFiAggregator.sol";
@@ -32,7 +34,9 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
 
         // label
         address dataProvider = IPoolAddressesProvider(aaveV3AddressesProvider).getPoolDataProvider();
-        (address aToken, , address _debtToken) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(asset);
+        (address aToken, , address _debtToken) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(
+            asset
+        );
         debtToken = _debtToken;
 
         vm.label(aaveV3AddressesProvider, "provider");
@@ -42,7 +46,7 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
         vm.label(dataProvider, "poolDataProvider");
     }
 
-    function _deploy() internal override {
+    function _deploy() internal virtual override {
         // NOTE: deployer is owner
         vm.prank(owner);
         aggregator = new BorrowFiAggregator(aaveV3AddressesProvider);
@@ -50,8 +54,6 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
 
         vm.prank(owner);
         aggregator.setWrapper(address(market), BorrowFiAggregator.WrapperType.AaveV3);
-
-        // deal(asset, market, 10000 * (1e18), true);
     }
 
     function testSetUp_Ok() public override {
@@ -62,6 +64,7 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
             "wrapperType is not set correctly"
         );
     }
+
     function testAggregateBorrow_Ok() public override {
         // setUp
         // create param
@@ -80,5 +83,20 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
 
         // assert
         assertEq(IERC20(asset).balanceOf(address(this)), balBefore + borrowAmount, "borrow amount");
+    }
+}
+
+contract TestBorrowFiAggregatorForAaveHuff is TestBorrowFiAggregatorForAave {
+    function _deploy() internal override {
+        // NOTE: deployer is owner
+        vm.prank(owner);
+        aggregator = new BorrowFiAggregator(aaveV3AddressesProvider);
+        market = HuffDeployer
+            .config()
+            .with_addr_constant("POOL", IPoolAddressesProvider(aaveV3AddressesProvider).getPool())
+            .deploy("aave-v3/AaveV3Market");
+
+        vm.prank(owner);
+        aggregator.setWrapper(address(market), BorrowFiAggregator.WrapperType.AaveV3);
     }
 }
