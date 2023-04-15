@@ -49,20 +49,16 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
     function _deploy() internal virtual override {
         // NOTE: deployer is owner
         vm.prank(owner);
-        aggregator = new BorrowFiAggregator(aaveV3AddressesProvider);
+        aggregator = new BorrowFiAggregator();
         market = address(new AaveV3Market(IPoolAddressesProvider(aaveV3AddressesProvider)));
 
         vm.prank(owner);
-        aggregator.setWrapper(address(market), BorrowFiAggregator.WrapperType.AaveV3);
+        aggregator.setWrapper(address(market), true);
     }
 
     function testSetUp_Ok() public override {
         assertEq(aggregator.owner(), owner, "owner is not set correctly");
-        assertEq(
-            uint8(aggregator.getWrapperType(market)),
-            uint8(BorrowFiAggregator.WrapperType.AaveV3),
-            "wrapperType is not set correctly"
-        );
+        assertEq(aggregator.isWhitelistedWrapper(market), true, "wrapperType is not set correctly");
     }
 
     function testAggregateBorrow_Ok() public override {
@@ -90,13 +86,13 @@ contract TestBorrowFiAggregatorForAaveHuff is TestBorrowFiAggregatorForAave {
     function _deploy() internal override {
         // NOTE: deployer is owner
         vm.prank(owner);
-        aggregator = new BorrowFiAggregator(aaveV3AddressesProvider);
+        aggregator = new BorrowFiAggregator();
         market = HuffDeployer
             .config()
             .with_addr_constant("POOL", IPoolAddressesProvider(aaveV3AddressesProvider).getPool())
             .deploy("aave-v3/AaveV3Market");
 
         vm.prank(owner);
-        aggregator.setWrapper(address(market), BorrowFiAggregator.WrapperType.AaveV3);
+        aggregator.setWrapper(address(market), true);
     }
 }

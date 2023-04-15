@@ -2,8 +2,6 @@
 
 - [README - Solidity contracts](./contracts/README.md): Solidity contracts template `contracts` package
 
-- [README - Common TypeScript utilities](./common-ts/README.md): Common TypeScript utilities `@huff-eip4borrow/common-ts`
-
 ### Requirements
 
 - Node.js >= 15
@@ -35,3 +33,10 @@ yarn test   # run all tests
 yarn lint:check   # run all linters
 yarn lint:fix   # run all linters
 ```
+
+## Deployed Contracts
+
+|     |     |
+| --- | --- |
+|     |     |
+|     |     |

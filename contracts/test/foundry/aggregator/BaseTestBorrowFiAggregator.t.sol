@@ -59,14 +59,13 @@ abstract contract BaseTestBorrowFiAggregator is Test {
 
     function testSetUp_Ok() public virtual;
 
-    function testSetWrapper_Ok(uint8 _wtype) public virtual {
+    function testSetWrapper_Ok(bool value) public virtual {
         // setUp
-        vm.assume(_wtype <= uint8(type(BorrowFiAggregator.WrapperType).max));
         // execution
         vm.prank(owner);
-        aggregator.setWrapper(address(0xf00), BorrowFiAggregator.WrapperType(_wtype));
+        aggregator.setWrapper(address(0xf00), value);
         // assert
-        assertEq(uint8(aggregator.getWrapperType(address(0xf00))), uint8(_wtype), "wrapper is not set correctly");
+        assertEq(aggregator.isWhitelistedWrapper(address(0xf00)), value, "wrapper is not set correctly");
     }
 
     function testSetWrapper_RevertIfNotOwner() public virtual {
@@ -75,7 +74,7 @@ abstract contract BaseTestBorrowFiAggregator is Test {
         // execution
         // assert
         vm.expectRevert("Ownable: caller is not the owner");
-        aggregator.setWrapper(address(0xf00), BorrowFiAggregator.WrapperType.AaveV3);
+        aggregator.setWrapper(address(0xf00), true);
     }
 
     function testAggregateBorrow_Ok() public virtual {
