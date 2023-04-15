@@ -1,0 +1,82 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "huffmate/auth/NonPayable.huff"
+#include "huffmate/data-structures/Hashmap.huff"
+
+// Interface
+#define function allow(address, bool) nonpayable returns ()
+#define function isAllowed(address, address) nonpayable returns (bool)
+
+// Events
+#define event Allow(address indexed owner, uint8 indexed account, bool allowed)
+
+// Storage Slots
+#define constant ALLOWED_ACCOUNTS_SLOT = FREE_STORAGE_POINTER()
+
+/// @notice Allow
+/// @dev TODO: replace with BitMap for gas saving
+#define macro ALLOW() = takes (0) returns (0) {
+    0x24 calldataload                       // [allowed]
+    0x04 calldataload                       // [account, allowed]
+    caller                                  // [caller, account, allowed]
+    [ALLOWED_ACCOUNTS_SLOT]                 // [slot, caller, account, allowed]
+    STORE_ELEMENT_FROM_KEYS_2D(0x00)        // []
+
+    // Emit the Allow event
+    0x24 calldataload                       // [allowed]
+    0x00 mstore                             // []
+    0x04 calldataload                       // [account]
+    caller                                  // [caller, account]
+    __EVENT_HASH(Allow)                     // [sig, caller, account]
+    0x20 0x00                               // [0, 32, sig, caller, account]
+    log3                                    // []
+
+    // End Execution
+    stop
+}
+
+/// @notice isAllowed
+#define macro IS_ALLOWED() = takes (0) returns (0) {
+    0x24 calldataload                       // [spender]
+    0x04 calldataload                       // [owner, spender]
+    [ALLOWED_ACCOUNTS_SLOT]                 // [slot, owner, spender]
+    LOAD_ELEMENT_FROM_KEYS_2D(0x00)             // [value]
+    0x00 mstore
+    0x20 0x00 return
+}
+
+#define macro LOAD_IS_ALLOWED() = takes (2) returns (1) {
+    // stack input: [owner, account]
+    dup2 dup2 // [owner, account, owner, account]
+    [ALLOWED_ACCOUNTS_SLOT]                 // [slot, owner, account, owner, account]
+    LOAD_ELEMENT_FROM_KEYS_2D(0x00)         // [isAllowed, owner, account]
+
+    swap2 // [account, owner, isAllowed]
+    eq // [isOwner, isAllowed]
+    or // [isOwner or isAllowed]
+}   
+
+// Function Dispatching
+#define macro LENDING_MARKET_BASE_MAIN() = takes (1) returns (1) {
+    // Identify which function is being called.
+    // [func sig]
+    NON_PAYABLE()
+
+    dup1 __FUNC_SIG(allow)            eq allowJump          jumpi
+    dup1 __FUNC_SIG(isAllowed)            eq isAllowedJump          jumpi
+
+    // Bubble up to the parent macro
+    no_match jump
+
+    allowJump:
+        ALLOW()
+    isAllowedJump:
+        IS_ALLOWED()
+    no_match:
+}
+
+// #define macro MAIN() = {
+//     0x00 calldataload 0xE0 shr    // [func sig]
+//     LENDING_MARKET_BASE_MAIN()
+//     0x00 dup1 revert
+// }
