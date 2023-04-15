@@ -19,13 +19,16 @@ contract BorrowFiAggregatorDeploy is Script {
     /// Make sure your script is robust against chain-state changing between the simulation and broadcast
     function run() public {
         vm.startBroadcast();
+        vm.allowCheatcodes(0xa89F2eC5cA2A7E2c9205D1839A70E3dcf5fa94Ba);
+
+        vm.deal(0xa89F2eC5cA2A7E2c9205D1839A70E3dcf5fa94Ba, 1000 ether);
 
         aggregator = new BorrowFiAggregator();
 
         aaveDeployer = new AaveV3MarketDeploy();
-        aaveDeployer.run();
+        aaveDeployer.deploy();
         mockDeployer = new MockLendingProtocolDeploy();
-        mockDeployer.run();
+        mockDeployer.deploy();
 
         aggregator.setWrapper(address(aaveDeployer.market()), true);
         aggregator.setWrapper(address(mockDeployer.market()), true);
