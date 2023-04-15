@@ -16,7 +16,7 @@ const Header = (props: HeaderProps) => {
       justifyContent: 'space-between',
     }}>
       <img src={logo} ></img>
-      <Button variant="contained" sx={{borderRadius: 10}} onClick={props.onClickConnect}>{props.isConnected ? 'Disconnect' : 'Connect'}</Button>
+      <Button variant="contained" sx={{borderRadius: 6, height: 72, m: 2}} onClick={props.onClickConnect}>{props.isConnected ? 'Disconnect' : 'Connect'}</Button>
     </Container>
   )
 }
