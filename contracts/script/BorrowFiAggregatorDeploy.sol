@@ -23,8 +23,10 @@ contract BorrowFiAggregatorDeploy is Script {
         aggregator = new BorrowFiAggregator();
 
         aaveDeployer = new AaveV3MarketDeploy();
+        vm.allowCheatcodes(address(aaveDeployer));
         aaveDeployer.run();
         mockDeployer = new MockLendingProtocolDeploy();
+        vm.allowCheatcodes(address(mockDeployer));
         mockDeployer.run();
 
         aggregator.setWrapper(address(aaveDeployer.market()), true);

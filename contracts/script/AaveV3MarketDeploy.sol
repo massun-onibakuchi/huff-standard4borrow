@@ -16,12 +16,10 @@ contract AaveV3MarketDeploy is Script {
     /// Forge simulates your script, generates transaction data from the simulation results, then broadcasts the transactions.
     /// Make sure your script is robust against chain-state changing between the simulation and broadcast
     function run() public {
-        vm.startBroadcast();
         provider = IPoolAddressesProvider(0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e); // Ethereum mainnet
 
         market = new AaveV3Market(provider);
 
         console2.log("AaveV3Market:>> ", address(market));
-        vm.stopBroadcast();
     }
 }
