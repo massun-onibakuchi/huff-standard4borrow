@@ -45,7 +45,6 @@
     0x20 0x00 return
 }
 
-// TODO: Refactor
 #define macro LOAD_IS_ALLOWED() = takes (2) returns (1) {
     // stack input: [owner, account]
     dup2 dup2 // [owner, account, owner, account]

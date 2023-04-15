@@ -9,13 +9,17 @@ import {IERC20, IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extens
 contract MockLendingMarket is LendingMarketBase {
     uint256 public constant SCALE = 1e18;
 
+    MockERC20 public immutable asset;
     MockERC20 public immutable ibToken;
     MockERC20 public immutable debtToken;
     uint256 public immutable price;
 
-    constructor(uint256 _price) {
-        ibToken = new MockERC20();
-        debtToken = new MockERC20();
+    constructor(address _asset, uint256 _price) {
+        string memory name = IERC20Metadata(_asset).name();
+        string memory symbol = IERC20Metadata(_asset).symbol();
+        asset = MockERC20(_asset);
+        ibToken = new MockERC20(name, symbol);
+        debtToken = new MockERC20(name, symbol);
         price = _price;
     }
 
