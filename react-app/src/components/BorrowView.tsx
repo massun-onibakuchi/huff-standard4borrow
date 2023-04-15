@@ -1,25 +1,28 @@
 import styled from "styled-components"
 
 import { BigNumber } from "ethers"
-import { useMockLendingMarketBorrow, usePrepareMockLendingMarketBorrow } from "../utils/generated"
 
 
-const BorrowView = () => {
-  const { config, error } = usePrepareMockLendingMarketBorrow({
-    address: '0x6D544390Eb535d61e196c87d6B9c80dCD8628Acd',
-    args: [
-      '0x5FbDB2315678afecb367f032d93F642f64180aa3',
-      BigNumber.from('42'),
-      '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
-      '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
-    ],
-  })
-  const { write } = useMockLendingMarketBorrow(config)
+interface BorrowViewProps {
+  myAddress?: `0x${string}`;
+}
+
+const BorrowView = (props: BorrowViewProps) => {
+  // const { config, error } = usePrepareMockLendingMarketBorrow({
+  //   address: '0x6D544390Eb535d61e196c87d6B9c80dCD8628Acd',
+  //   args: [
+  //     '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  //     BigNumber.from('42'),
+  //     props.myAddress,
+  //     props.myAddress,
+  //   ],
+  // })
+  // const { write } = useMockLendingMarketBorrow(config)
   return (
     <Container>
       <Info>
         <p>Amount to Borrow</p>
-        <Amount type="number" min={0}/>
+        <Amount type="number" min={0} />
         <Coins name="coin">
           <option value="USDC">USDC</option>
           <option value="ETH">ETH</option>
@@ -36,7 +39,9 @@ const BorrowView = () => {
         <p>2.88%</p>
         <p>APY</p>
       </Info>
-      <Confirm type="button" disabled={!write} onClick={() => write?.()}>Confirm Borrow</Confirm>
+      <Confirm type="button" onClick={() => {}}>
+        Confirm Borrow
+      </Confirm>
     </Container>
   )
 }

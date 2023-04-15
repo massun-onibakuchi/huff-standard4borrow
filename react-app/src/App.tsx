@@ -17,7 +17,7 @@ const App = () => {
       <Header onClickConnect={() => (isConnected ? disconnect () : connect())} isConnected={isConnected} />
       <main>
         <Title>Borrow Aggregator for DeFi</Title>
-        {isConnected ? <BorrowView /> : <p>You should connect the wallet to borrow.</p>}
+        {isConnected ? <BorrowView myAddress={address} /> : <p>You should connect the wallet to borrow.</p>}
       </main>
     </Container>
   )
