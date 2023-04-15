@@ -34,7 +34,9 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
 
         // label
         address dataProvider = IPoolAddressesProvider(aaveV3AddressesProvider).getPoolDataProvider();
-        (address aToken, , address _debtToken) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(asset);
+        (address aToken, , address _debtToken) = IAaveProtocolDataProvider(dataProvider).getReserveTokensAddresses(
+            asset
+        );
         debtToken = _debtToken;
 
         vm.label(aaveV3AddressesProvider, "provider");
@@ -62,6 +64,7 @@ contract TestBorrowFiAggregatorForAave is BaseTestBorrowFiAggregator {
             "wrapperType is not set correctly"
         );
     }
+
     function testAggregateBorrow_Ok() public override {
         // setUp
         // create param
@@ -88,7 +91,10 @@ contract TestBorrowFiAggregatorForAaveHuff is TestBorrowFiAggregatorForAave {
         // NOTE: deployer is owner
         vm.prank(owner);
         aggregator = new BorrowFiAggregator(aaveV3AddressesProvider);
-        market = HuffDeployer.config().with_addr_constant("POOL", IPoolAddressesProvider(aaveV3AddressesProvider).getPool()).deploy("aave-v3/AaveV3Market");
+        market = HuffDeployer
+            .config()
+            .with_addr_constant("POOL", IPoolAddressesProvider(aaveV3AddressesProvider).getPool())
+            .deploy("aave-v3/AaveV3Market");
 
         vm.prank(owner);
         aggregator.setWrapper(address(market), BorrowFiAggregator.WrapperType.AaveV3);
