@@ -8,6 +8,7 @@
 #define function supply(address, uint256, address) nonpayable returns (uint256)
 #define function withdraw(address, uint256, address) nonpayable returns (uint256)
 #define function borrow(address, uint256, address, address) nonpayable returns (uint256)
+#define function repay(address, uint256, address) nonpayable returns (uint256)
 
 // Events
 // #define event Allow(address indexed owner, uint8 indexed account, bool allowed)
@@ -20,6 +21,7 @@
 #define constant DEPOSIT_FUNC_SELECTOR = 0xe8eda9df00000000000000000000000000000000000000000000000000000000
 #define constant WITHDRAW_FUNC_SELECTOR = 0x69328dec00000000000000000000000000000000000000000000000000000000
 #define constant BORROW_FUNC_SELECTOR = 0xa415bcad00000000000000000000000000000000000000000000000000000000
+#define constant REPAY_FUNC_SELECTOR = 0x573ade8100000000000000000000000000000000000000000000000000000000
 
 // function supply(address asset, uint256 amount, address receiver) external returns (uint256)
 #define macro SUPPLY() = takes (0) returns (0) {
@@ -185,6 +187,13 @@
     0x20 0x00 return
 }
 
+// #define function repay(address, uint256, address) nonpayable returns (uint256)
+#define macro REPAY() = takes (0) returns (0) {
+    // IERC20(asset).safeTransferFrom(msg.sender, address(this), amount);
+    // IERC20(asset).safeApprove(pool, amount);
+    // return IPool(pool).repay(asset, amount, 2, onBehalfOf);
+}
+
 #define macro MAIN() = takes (0) returns (0) {
     pc calldataload 0xE0 shr    // [funcSig]
 
@@ -193,6 +202,7 @@
     dup1 __FUNC_SIG(supply) eq supplyJump jumpi
     dup1 __FUNC_SIG(borrow) eq borrowJump jumpi
     dup1 __FUNC_SIG(withdraw) eq withdrawJump jumpi
+    dup1 __FUNC_SIG(repay) eq repayJump jumpi
 
     LENDING_MARKET_BASE_MAIN()
 
@@ -205,6 +215,8 @@
         BORROW()
     withdrawJump:
         WITHDRAW()
+    repayJump:
+        REPAY()
 
     error:
         0x00 dup1 revert
