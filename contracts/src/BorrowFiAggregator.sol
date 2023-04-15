@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {BitMaps} from "@openzeppelin/contracts/utils/structs/BitMaps.sol";
+
+import {AddressCast} from "./utils/AddressCast.sol";
 
 import {ILendingMarket} from "./interfaces/ILendingMarket.sol";
 
@@ -11,27 +14,17 @@ import {IPoolAddressesProvider} from "./interfaces/aave-v3/IPoolAddressesProvide
 import {ICreditDelegationTokenLike} from "./interfaces/aave-v3/ICreditDelegationTokenLike.sol";
 
 contract BorrowFiAggregator is Ownable {
-    enum WrapperType {
-        UnRegistered,
-        AaveV2,
-        AaveV3,
-        Mock
-    }
+    using BitMaps for BitMaps.BitMap;
+    using AddressCast for address;
+
     struct Calldata {
         address wrapper;
         uint256 amount;
     }
 
-    /// @dev Aave V3 Addresses register of the protocol
-    IPoolAddressesProvider internal immutable _provider;
+    event SetWrapper(address indexed wrapper, bool indexed value);
 
-    mapping(address => WrapperType) internal _wrapperTypes;
-
-    event SetWrapper(address indexed wrapper, WrapperType indexed wType);
-
-    constructor(address _poolAddressesProvider) {
-        _provider = IPoolAddressesProvider(_poolAddressesProvider);
-    }
+    mapping(address => BitMaps.BitMap) private _whitelistedWrappers;
 
     /// @notice users have to `ILendingMarket(wrapper).allow(asset, aggre)` for each wrappers
     /// before calling this function
@@ -39,11 +32,9 @@ contract BorrowFiAggregator is Ownable {
         uint256 length = data.length;
         for (uint256 i; i < length; ) {
             address wrapper = data[i].wrapper;
-            uint amountBorrow = data[i].amount;
 
-            require(_wrapperTypes[wrapper] != WrapperType.UnRegistered, "aggregator: Wrapper is not whitelisted");
-
-            ILendingMarket(wrapper).borrow(asset, amountBorrow, msg.sender, msg.sender);
+            require(isWhitelistedWrapper(wrapper), "aggregator: Wrapper is not whitelisted");
+            ILendingMarket(wrapper).borrow(asset,  data[i].amount, msg.sender, msg.sender);
 
             unchecked {
                 ++i;
@@ -51,13 +42,12 @@ contract BorrowFiAggregator is Ownable {
         }
     }
 
-    function getWrapperType(address wrapper) external view returns (WrapperType) {
-        return _wrapperTypes[wrapper];
+    function isWhitelistedWrapper(address wrapper) public view returns (bool) {
+        return _whitelistedWrappers[wrapper].get(wrapper.toUint256());
     }
 
-    function setWrapper(address wrapper, WrapperType wType) external onlyOwner {
-        _wrapperTypes[wrapper] = wType;
-
-        emit SetWrapper(wrapper, wType);
+    function setWrapper(address wrapper, bool value) external onlyOwner {
+        _whitelistedWrappers[wrapper].setTo(wrapper.toUint256(), value);
+        emit SetWrapper(wrapper, value);
     }
 }

@@ -25,11 +25,11 @@ contract TestBorrowFiAggregatorForMock is BaseTestBorrowFiAggregator {
     function _deploy() internal override {
         // NOTE: deployer is owner
         vm.prank(owner);
-        aggregator = new BorrowFiAggregator(aaveV3AddressesProvider);
+        aggregator = new BorrowFiAggregator();
         market = address(new MockLendingMarket(asset, 1.2 * 1e18));
 
         vm.prank(owner);
-        aggregator.setWrapper(address(market), BorrowFiAggregator.WrapperType.Mock);
+        aggregator.setWrapper(address(market), true);
 
         deal(asset, market, 10000 * (1e18), true);
     }
@@ -37,8 +37,8 @@ contract TestBorrowFiAggregatorForMock is BaseTestBorrowFiAggregator {
     function testSetUp_Ok() public override {
         assertEq(aggregator.owner(), owner, "owner is not set correctly");
         assertEq(
-            uint8(aggregator.getWrapperType(market)),
-            uint8(BorrowFiAggregator.WrapperType.Mock),
+            aggregator.isWhitelistedWrapper(market),
+            true,
             "wrapperType is not set correctly"
         );
     }
