@@ -9,7 +9,6 @@ import {IERC20, IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extens
 contract MockLendingMarket is LendingMarketBase {
     uint256 public constant SCALE = 1e18;
 
-    MockERC20 public immutable asset;
     MockERC20 public immutable ibToken;
     MockERC20 public immutable debtToken;
     uint256 public immutable price;
@@ -17,7 +16,6 @@ contract MockLendingMarket is LendingMarketBase {
     constructor(address _asset, uint256 _price) {
         string memory name = IERC20Metadata(_asset).name();
         string memory symbol = IERC20Metadata(_asset).symbol();
-        asset = MockERC20(_asset);
         ibToken = new MockERC20(name, symbol);
         debtToken = new MockERC20(name, symbol);
         price = _price;
@@ -42,12 +40,12 @@ contract MockLendingMarket is LendingMarketBase {
         address owner
     ) external override returns (uint256) {
         // _requirePermission(owner, msg.sender);
-        MockERC20(asset).mint(receiver, amount);
+        MockERC20(asset).transfer(receiver, amount);
         debtToken.mint(owner, amount); // NOTE: amount doesn't change for convenience
         return amount;
     }
 
-    function repay(address asset, uint256 amount, address onBehalfOf) external override returns (uint256) {
+    function repay(address asset, uint256 amount, address) external override returns (uint256) {
         IERC20(asset).transferFrom(msg.sender, address(this), amount);
         // debtToken.burn(onBehalfOf, amount);
         return amount;
