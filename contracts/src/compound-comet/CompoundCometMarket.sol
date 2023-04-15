@@ -20,28 +20,27 @@ contract CompoundCometMarket is LendingMarketBase {
         _comet = _cometMainInterface;
     }
 
+    ///Users are supposed to `allow`ed this market contract so that this can supply assets on behalf of users.
     function supply(address asset, uint256 amount, address receiver) external returns (uint256) {
-        require(asset != _comet.baseToken(), "asset-shoudldn't-be-baseToken");
         _comet.supplyFrom(msg.sender, receiver, asset, amount);
         return amount;
     }
 
     ///Users are supposed to `allow`ed this market contract so that this can withdraw assets on behalf of users.
     function withdraw(address asset, uint256 amount, address receiver) external returns (uint256) {
-        require(asset != _comet.baseToken(), "asset-shouldn't-be-baseToken");
         _comet.withdrawFrom(msg.sender, receiver, asset, amount);
         return amount;
     }
 
+    ///Users are supposed to `allow`ed this market contract so that this can withdraw assets on behalf of users.
     function borrow(address asset, uint256 amount, address receiver, address) external returns (uint256) {
-        require(asset == _comet.baseToken(), "asset-should-be-baseToken");
-        _comet.withdrawFrom(msg.sender, receiver, asset, amount);
+        _comet.withdrawFrom(msg.sender, receiver, _comet.baseToken(), amount);
         return amount;
     }
 
+    ///Users are supposed to `allow`ed this market contract so that this can repay assets on behalf of users.
     function repay(address asset, uint256 amount, address onBehalfOf) external returns (uint256) {
-        require(asset == _comet.baseToken(), "asset-should-be-baseToken");
-        _comet.supplyFrom(onBehalfOf, msg.sender, asset, amount);
+        _comet.supplyFrom(onBehalfOf, msg.sender, _comet.baseToken(), amount);
         return amount;
     }
 }
