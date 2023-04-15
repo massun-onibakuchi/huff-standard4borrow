@@ -19,9 +19,11 @@ contract BorrowFiAggregatorDeploy is Script {
     /// Make sure your script is robust against chain-state changing between the simulation and broadcast
     function run() public {
         vm.startBroadcast();
-        vm.allowCheatcodes(0xa89F2eC5cA2A7E2c9205D1839A70E3dcf5fa94Ba);
+        address user = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
+        vm.allowCheatcodes(user);
 
-        vm.deal(0xa89F2eC5cA2A7E2c9205D1839A70E3dcf5fa94Ba, 1000 ether);
+        // vm.deal(user, 1000 ether);
+        address asset = 0x6B175474E89094C44Da98b954EedeAC495271d0F; // DAI
 
         aggregator = new BorrowFiAggregator();
 
