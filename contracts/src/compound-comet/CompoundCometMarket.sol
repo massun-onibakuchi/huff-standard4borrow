@@ -22,7 +22,11 @@ contract CompoundCometMarket is LendingMarketBase {
 
     ///Users are supposed to `allow`ed this market contract so that this can supply assets on behalf of users.
     function supply(address asset, uint256 amount, address receiver) external returns (uint256) {
-        _comet.supplyFrom(msg.sender, receiver, asset, amount);
+        IERC20(asset).safeTransferFrom(msg.sender, address(this), amount);
+        IERC20(asset).safeApprove(address(_comet), amount);
+
+        _comet.supplyTo(receiver, asset, amount);
+
         return amount;
     }
 
@@ -33,7 +37,8 @@ contract CompoundCometMarket is LendingMarketBase {
     }
 
     ///Users are supposed to `allow`ed this market contract so that this can withdraw assets on behalf of users.
-    function borrow(address asset, uint256 amount, address receiver, address) external returns (uint256) {
+    function borrow(address asset, uint256 amount, address receiver, address owner) external returns (uint256) {
+        _requirePermission(owner, msg.sender);
         _comet.withdrawFrom(msg.sender, receiver, _comet.baseToken(), amount);
         return amount;
     }
