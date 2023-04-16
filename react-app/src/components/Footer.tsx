@@ -11,8 +11,10 @@ const Footer = (props: FooterProps) => {
   const [data, setData] = useState<number>()
   useEffect(() => {
     execute(getAaveLastBorrowedDocument, {}).then((result) => {
-      setData(calcAPY(parseInt(result?.data.borrows[0].userReserve.liquidityRate)))
+      console.log(result)
+      setData(calcAPY(parseInt(result?.data.borrows[0].reserve.liquidityRate)))
     })
+    
   }, [setData])
   return (
     <Box sx={{ flexGrow: 1 }}>

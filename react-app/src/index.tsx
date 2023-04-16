@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 
 import { WagmiConfig, createClient, configureChains } from 'wagmi'
-import { localhost } from '@wagmi/chains';
+import { mainnet } from '@wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public'
 
 
@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(
 );
 
 
-const { chains, provider, webSocketProvider } = configureChains([localhost], [publicProvider()])
+const { chains, provider, webSocketProvider } = configureChains([mainnet], [publicProvider()])
 
-
+console.log(chains)
 const client = createClient({
   autoConnect: true,
   provider,
