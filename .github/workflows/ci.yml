@@ -62,7 +62,8 @@ jobs:
         run: forge config --config-path=./contracts/foundry.toml
 
       - name: Run forge and hardhat tests
-        run: yarn test:sol --fork-url=$ETH_RPC_URL
+        run: exit 1
+        # run: yarn test:sol --fork-url=$ETH_RPC_URL
 
       - name: Run typescript tests
         run: yarn test:ts

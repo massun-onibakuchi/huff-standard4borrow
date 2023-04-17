@@ -12,6 +12,7 @@ contract AaveV3MarketHuffDeploy is Script {
 
     AaveV3Market public market;
 
+    // Ethereum mainnet
     IPoolAddressesProvider PROVIDER = IPoolAddressesProvider(0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e);
 
     /// @notice
@@ -20,7 +21,6 @@ contract AaveV3MarketHuffDeploy is Script {
     /// Make sure your script is robust against chain-state changing between the simulation and broadcast
     function run() public {
         vm.startBroadcast();
-        provider = IPoolAddressesProvider(0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e); // Ethereum mainnet
         market = AaveV3Market(
             HuffDeployer.config().with_addr_constant("POOL", PROVIDER.getPool()).deploy("aave-v3/AaveV3Market")
         );
