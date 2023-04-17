@@ -35,9 +35,9 @@ abstract contract BaseTestAaveV3Market is BaseTestLendingMarket {
         vm.label(debtToken, "debtToken");
         vm.label(dataProvider, "poolDataProvider");
 
-        console2.log("provider", address(PROVIDER));
-        console2.log("poolDataProvider", dataProvider);
-        console2.log("ibToken", interestBearingToken);
+        // console2.log("provider", address(PROVIDER));
+        // console2.log("poolDataProvider", dataProvider);
+        // console2.log("ibToken", interestBearingToken);
     }
 
     function _deploy() internal virtual returns (address _market) {

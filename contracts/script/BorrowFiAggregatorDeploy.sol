@@ -36,7 +36,7 @@ contract BorrowFiAggregatorDeploy is Script {
 
         vm.allowCheatcodes(address(aaveDeployer));
         vm.allowCheatcodes(address(mockDeployer));
-        
+
         aaveDeployer = new AaveV3MarketDeploy();
         mockDeployer = new MockLendingProtocolDeploy();
         aaveDeployer.deploy();
