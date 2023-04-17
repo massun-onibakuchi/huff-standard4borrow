@@ -1,6 +1,13 @@
-# Huff EIP4Borrow
+# BorrowFi
 
-- [README - Solidity contracts](./contracts/README.md): Solidity contracts template `contracts` package
+**Aggregator for finding the best borrowing rate**
+![cover](./img/cover.png)
+
+- Gas optimzed AaveV3 wrapper buit with Huff
+- BorrowFi Aggregator for single entry point to all lending protocols
+- New ERC standard for borrowing
+
+[Pitch](https://pitch.com/public/87323a0f-2e3b-4fb6-9593-80b0befa6e83/4be89224-71bd-4e80-8244-daa88b2a34c6)
 
 ### Requirements
 
@@ -35,8 +42,11 @@ yarn lint:fix   # run all linters
 ```
 
 ## Chains we deployed our BorrowFi Aggregator contract
+
 For all deployments, we used an address "0x777708eD0dA60151731363f36C14218005Bce4d1" to submit transactions.
+
 ### Polygon
+
 - BorrowFiAggregator
   - https://mumbai.polygonscan.com/address/0x5ef22a113f88b05038021b248f12944acea06c02
   - https://twitter.com/_cotoneum_/status/1647358425842737153?s=20
@@ -48,20 +58,25 @@ For all deployments, we used an address "0x777708eD0dA60151731363f36C14218005Bce
   - https://twitter.com/_cotoneum_/status/1647381876858814467?s=20
 
 ### Scroll
+
 - BorrowFiAggregator
   - https://blockscout.scroll.io/address/0x5EF22a113F88B05038021b248F12944ACeA06c02
 - AaveV3Market (borrowing wrapper for AaveV3)
   - https://blockscout.scroll.io/address/0x8A0f53461463c535Ce666f16596e9470069678C5
 - MockLendingProtocol (borrowing wrapper for MockERC20)
   - https://blockscout.scroll.io/address/0x13Bd7d095212bcfDC0F719840F7Cc26eA7F40CcB
+
 ### Celo-alfajores
+
 - BorrowFiAggregator
   - https://alfajores.celoscan.io/address/0x5ef22a113f88b05038021b248f12944acea06c02
 - AaveV3Market (borrowing wrapper for AaveV3)
   - https://alfajores.celoscan.io/address/0x8A0f53461463c535Ce666f16596e9470069678C5
 - MockLendingProtocol (borrowing wrapper for MockERC20)
   - https://alfajores.celoscan.io/address/0x13Bd7d095212bcfDC0F719840F7Cc26eA7F40CcB
+
 ### Ethereum Goerli
+
 - BorrowFiAggregator
   - https://goerli.etherscan.io/address/0x6cc8e62c62b5c534f65c3d026051caa84bbc112f
 - AaveV3Market (borrowing wrapper for AaveV3)
