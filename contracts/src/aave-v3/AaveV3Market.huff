@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+/// @author 0xbakuchi
+/// @title Aave V3 Lending Market wrapper in huff
+/// @dev TODO: Optimize gas usage
+///      TODO: Add events for deposit, withdraw, borrow, repay
+///      TODO: Use PUSH0 instead of PUSH1 0x00
+
 #include "huffmate/auth/NonPayable.huff"
 #include "huffmate/utils/SafeTransferLib.huff"
 #include "../LendingMarketBase.huff"
@@ -11,7 +17,6 @@
 #define function repay(address, uint256, address) nonpayable returns (uint256)
 
 // Events
-// #define event Allow(address indexed owner, uint8 indexed account, bool allowed)
 
 // Constants
 /// @notice Aave V3 Pool address ethereum mainnet
