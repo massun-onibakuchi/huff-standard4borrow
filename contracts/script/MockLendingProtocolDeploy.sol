@@ -34,20 +34,4 @@ contract MockLendingProtocolDeploy is Script {
         console2.log("ibToken :>>", address(market.ibToken()));
         console2.log("debtToken :>>", address(market.debtToken()));
     }
-
-    function deployWithRealDAI() public {
-        uint256 price = 1.2 * 1e18;
-
-        asset = new MockERC20("DAI", "DAI");
-
-        asset.mint(address(this), 100000 * 1e18);
-        asset.mint(msg.sender, 100000 * 1e18);
-
-        market = new MockLendingMarket(address(asset), price);
-
-        console2.log("asset :>>", address(asset));
-        console2.log("market :>>", address(market));
-        console2.log("ibToken :>>", address(market.ibToken()));
-        console2.log("debtToken :>>", address(market.debtToken()));
-    }
 }
