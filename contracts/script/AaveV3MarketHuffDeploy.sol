@@ -2,14 +2,18 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Script.sol";
+import {HuffDeployer} from "foundry-huff/HuffDeployer.sol";
 
 import {IPoolAddressesProvider} from "../src/interfaces/aave-v3/IPoolAddressesProvider.sol";
 import {AaveV3Market} from "../src/aave-v3/AaveV3Market.sol";
 
-contract AaveV3MarketDeploy is Script {
+contract AaveV3MarketHuffDeploy is Script {
     IPoolAddressesProvider public provider;
 
     AaveV3Market public market;
+
+    // Ethereum mainnet
+    IPoolAddressesProvider PROVIDER = IPoolAddressesProvider(0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e);
 
     /// @notice
     /// Watch out for frontrunning.
@@ -17,15 +21,11 @@ contract AaveV3MarketDeploy is Script {
     /// Make sure your script is robust against chain-state changing between the simulation and broadcast
     function run() public {
         vm.startBroadcast();
-        deploy();
-        vm.stopBroadcast();
-    }
-
-    function deploy() public {
-        provider = IPoolAddressesProvider(0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e); // Ethereum mainnet
-
-        market = new AaveV3Market(provider);
+        market = AaveV3Market(
+            HuffDeployer.config().with_addr_constant("POOL", PROVIDER.getPool()).deploy("aave-v3/AaveV3Market")
+        );
 
         console2.log("AaveV3Market:>> ", address(market));
+        vm.stopBroadcast();
     }
 }

@@ -14,6 +14,12 @@ contract MockLendingProtocolDeploy is Script {
     /// Forge simulates your script, generates transaction data from the simulation results, then broadcasts the transactions.
     /// Make sure your script is robust against chain-state changing between the simulation and broadcast
     function run() public {
+        vm.startBroadcast();
+        deploy();
+        vm.stopBroadcast();
+    }
+
+    function deploy() public {
         uint256 price = 1.2 * 1e18;
 
         asset = new MockERC20("DAI", "DAI");
