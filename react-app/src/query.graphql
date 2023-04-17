@@ -1,0 +1,7 @@
+query getAaveLastBorrowed {
+  borrows(first: 1, orderBy: timestamp, orderDirection: desc, where: { action: Borrow, reserve_: { symbol: "USDC" } }) {
+    reserve {
+      liquidityRate
+    }
+  }
+}
